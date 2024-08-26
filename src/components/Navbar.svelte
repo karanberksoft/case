@@ -1,7 +1,7 @@
 <script lang="ts">
   import Modal from "./Modal.svelte";
   import { activeButton } from '$lib/stores';
-  export let setActiveButton : (buttonIndex: number)  => void
+  export let setActiveButton : (buttonIndex: number|null)  => void
 
   let isOpen = false;
 
@@ -92,9 +92,16 @@
         {/if}
       </div>
       <div class="flex justify-center items-center">
+        {#if $activeButton ==null}
         <button class="w-5 hidden md:block">
           <img src="/assets/DownIcon.svg" alt="Logo" class="h-8 w-8 mr-2" />
         </button>
+        {:else}
+        <div class="h-7 bg-[#F4F4F5] rounded-md flex justify-center items-center gap-2 px-2 text-xs text-[#52525B] font-normal leading-4" >
+          {$activeButton==1 ? 'Storyboard': $activeButton==2 ? 'Draft': $activeButton==3 ? 'Review':'none'}
+        </div>
+        
+        {/if}
       </div>
     </div>
 
@@ -104,7 +111,7 @@
       <div class={"flex justify-center items-center"}>
         <button
           class={`py-2 px-4 rounded-lg ${$activeButton === 1 ? "bg-[#FFFFFF] text-[#09090B]" : "bg-[#F4F4F5] text-[#71717A]"}`}
-          on:click={() => setActiveButton(1)}
+          on:click={() => $activeButton === 1 ? setActiveButton(null) : setActiveButton(1)}
         >
           Storyboard</button
         >
@@ -112,7 +119,7 @@
       <div class={"flex justify-center items-center"}>
         <button
           class={`py-2 px-4 rounded-lg ${$activeButton === 2 ? "bg-[#FFFFFF] bg-[#FFFFFF]" : "bg-[#F4F4F5] text-[#71717A]"}`}
-          on:click={() => setActiveButton(2)}
+          on:click={() => $activeButton === 2 ? setActiveButton(null) : setActiveButton(2)}
         >
           Draft</button
         >
@@ -120,7 +127,7 @@
       <div class={`flex justify-center items-center`}>
         <button
           class={` flex justify-center items-center py-2 px-4 rounded-lg ${$activeButton === 3 ? "bg-[#FFFFFF] bg-[#FFFFFF]" : "bg-[#F4F4F5] text-[#71717A]"}`}
-          on:click={() => setActiveButton(3)}
+          on:click={() => $activeButton === 3 ? setActiveButton(null) : setActiveButton(3)}
           ><img
             src="/assets/gm.svg"
             alt="Logo"
@@ -149,12 +156,28 @@
       >
         <img src="/assets/more.svg" alt="" /></button
       >
+      {#if $activeButton == null}
       <button
         type="button"
         class="text-black font-medium rounded-lg text-sm text-center w-9 h-9 flex justify-center items-center"
       >
         <img src="/assets/button.svg" alt="" /></button
       >
+      {:else}
+      <div class="w-32 rounded-full bg-[#F4F4F5] flex items-center hidden md:flex">
+        <div class="w-6 h-6 rounded-full border border-[#E4E4E7] ml-2 bg-[url('assets/Image.svg')]"></div>
+        <div class="w-6 h-6 rounded-full border border-[#E4E4E7] -ml-2"></div>
+        <div class="w-6 h-6 rounded-full border border-[#E4E4E7] -ml-2"></div>
+        <div class="w-6 h-6 rounded-full border border-[#E4E4E7] -ml-2"></div>
+        <div class="w-6 h-6 rounded-full border border-[#E4E4E7] -ml-2 flex justify-center items-center text-[#09090B] text-xs">+9</div>
+        <button
+        type="button"
+        class="text-black font-medium rounded-lg text-sm text-center w-9 h-9 flex justify-center items-center"
+      >
+        <img src="/assets/button.svg" alt="" /></button
+      >
+      </div>
+      {/if}
 
       <button
         type="button"

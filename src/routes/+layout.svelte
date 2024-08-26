@@ -2,7 +2,7 @@
     import "../app.css";
   import Navbar from "../components/Navbar.svelte";
   import { activeButton } from '$lib/stores';
-  const setActiveButton = (buttonIndex: number): void => {
+  const setActiveButton = (buttonIndex: number|null): void => {
     activeButton.set(buttonIndex);
   };
   </script>
