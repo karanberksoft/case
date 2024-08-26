@@ -58,6 +58,12 @@
   function selectTone(toneType: any) {
     tone = toneType;
   }
+
+  let stories:any[] = [];
+
+  function addStory() {
+    stories = [...stories, { id: stories.length + 1 }];
+  }
 </script>
 
 <div
